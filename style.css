@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;600&family=Aldrich&family=Arya:wght@400;700&family=Carrois+Gothic+SC&family=DotGothic16&display=swap');
+
+h1, h2, h3, h4, h5, h6, p, div, a {
+    color: red;
+    
+}
+
+h1 {font-family: 'Albert Sans', sans-serif;}
+h2 {font-family: 'Aldrich', sans-serif;}
+h3, p, div, h6 {font-family: 'Arya', sans-serif;}
+h4 {font-family: 'Carrois Gothic SC', sans-serif;}
+h5 {font-family: 'DotGothic16', sans-serif;}
