@@ -4,7 +4,7 @@ Building a tic tac toe game in browser through the Odin Project as a way to prac
 
 
 **TODO:**
--establish main layout.
+    DONE establish main layout.
 
 -write function that will render contents of the gameBoard array to the webpage
 

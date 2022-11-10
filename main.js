@@ -18,6 +18,7 @@ const PlayerFactory = (sign) => {
 }
 
 
+//test code to go down here
 
 //no code beyond this line
 module.exports = {test1, test2};
@@ -26,11 +27,3 @@ module.exports = {test1, test2};
 
 
 
-
-
-
-
-
-
-//no code beyond this line
-module.exports = {test1, test2module};
