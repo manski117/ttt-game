@@ -1,23 +1,31 @@
 console.log('js is working')
 
 const BoardModule = (() =>{
-    const gameBoard = [
+    let gameBoard = [
         'X', 'O', ' ',
         'X', 'O', 'X',
         ' ', 'O', 'O'
      ];
+
+    const emptyGameBoard = [
+        ' ', ' ', ' ',
+        ' ', ' ', ' ',
+        ' ', ' ', ' '
+     ]; 
     
 
 
     //detect when a square is clicked
-
     //associate square DOM elements
     const squares = document.querySelectorAll("div.square");
     for (const square of squares){
     square.addEventListener('click', function(event){
-        alert('wuzzup');
+        alert(playerO.sign(), playerO.printScore());
         alert(this.id);
+        //TODO: Update this when player and turns are programmed. 
+        markSquare("X", this.id);
         renderBoard(gameBoard, squares);
+        
     });
     }
 
@@ -36,7 +44,30 @@ const BoardModule = (() =>{
         })
     };
 
-    return{renderBoard}
+    const markSquare = (sign, squareID)=>{
+        
+        //get last letter of string passed (should = array index)
+        let lastCharID = squareID.slice(-1);
+        //turn that into an integer
+        let intID = parseInt(lastCharID);
+        
+        //check to see if that square has anything in it yet other than space.
+        if (gameBoard[intID] == " "){
+            //overrite that character in the main gameBoard array with the square that was chosen.
+            gameBoard[intID] = sign;
+        } else{
+            alert("Please choose a blank space");
+            return;
+        }
+        
+    };
+    const resetBoard = () =>{
+        gameBoard = emptyGameBoard;
+        renderBoard(gameBoard, squares);
+        return;
+    };
+
+    return{renderBoard, markSquare, resetBoard};
 
     
 
@@ -60,15 +91,56 @@ const DisplayModule = (() =>{
 })();
 
 const GameModule = (() =>{
-    //clicking a square should be enough to start the game
+    let game = 0;
+    let turn = "X";
+
+    const resetButton = document.querySelector("#reset-btn");
+    resetButton.addEventListener("click", function(event){
+        alert("you clicked reset button")
+        resetGame();
+    });
+
     //check for 3 in a row
     //detect turn and logic for turn change after valid box clicked. 
-    return;
+
+    const resetGame = () => {
+        game = 0;
+        turn = "X";
+        BoardModule.resetBoard();
+        
+    }
+    
+    const resetGameBoard = () =>{
+        //reset just the game board and turns, but leave score alone. 
+
+    }
+    
+
+    
+    return{resetGame, resetGameBoard};
 })();
 
-const PlayerFactory = (sign) => {
+const PlayerFactory = (symbol) => {
+    let score = 0;
+    let playerSign = symbol;
+    const sign = () => {
+        return playerSign;
+    }
 
-}
+    const increaseScore = () =>{
+        score++;
+    };
+
+    const printScore = () =>{
+        return score;
+    };
+
+    return{sign, increaseScore, printScore}
+
+};
+
+const playerO = PlayerFactory("O");
+const playerX = PlayerFactory("X");
 
 
 //test code to go down here

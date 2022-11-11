@@ -1,18 +1,42 @@
-const {test1, test2module} = require("./main");
+const {BoardModule, DisplayModule} = require("./main");
 
-test("does test1 add goofy?",()=>{
-    expect(test1("donald")).toBe('donald and goofy');
+//test from factory function
+// test("does test1 add goofy?",()=>{
+//     expect(test1("donald")).toBe('donald and goofy');
 
-});
+// });
 
 //This is how you would write the test to get a method from a module. 
-describe("does test2 increment?", ()=> {
-    test("6 should become 7", () =>{
-        expect(test2module.test2(6)).toBe(7);
+describe("does the array contain ONLY X, O, or ' ' ?", ()=> {
+    let badA = ['a', 'b', 'X', 'o', 'Z']
+    let goodA = ["X", "X", "O", " ", "O"]
+    let tArray = BoardModule.gameBoard;
+    function validGameBoardArray (array){
+        let validity = undefined;
+        array.forEach(element => {
+            
+            if (["X", "O", " "].includes(element)) {
+                validity = true;
+            }
+            if (!["X", "O", " "].includes(element)){
+                validity = false;
+                return;
+            }
+        });
+        return validity;
+    }
+
+    test("positive control: good array should return true", () =>{
+        
+        expect(validGameBoardArray(goodA)).toBe(true);
     });
 
-    test("1 should become 2", () => {
-        expect(test2module.test2(1)).toBe(2);
+    test("negative control: bad array should return false", () => {
+        expect(validGameBoardArray(badA)).toBe(false);
+    });
+
+    test("main test: array from program should be true", () => {
+        expect(validGameBoardArray(tArray)).toBe(true);
     });
 });
 
