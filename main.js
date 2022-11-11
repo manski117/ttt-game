@@ -8,6 +8,7 @@ const BoardModule = (() =>{
      ];
     
 
+
     //detect when a square is clicked
 
     //associate square DOM elements
@@ -16,10 +17,28 @@ const BoardModule = (() =>{
     square.addEventListener('click', function(event){
         alert('wuzzup');
         alert(this.id);
+        renderBoard(gameBoard, squares);
     });
     }
 
     //render all contents of the gameboard array to the webpage. 
+    const renderBoard = (array, gameGrids) => {
+        let i = 0;
+        //do something with each item in the array
+        array.forEach(element => {
+            console.log(element)
+        });
+        //put that in the corresponding game square
+        gameGrids.forEach(element=>{
+            console.log(array[i], i);
+            element.innerText = array[i];
+            i++;
+        })
+    };
+
+    return{renderBoard}
+
+    
 
     //associate with button DOM elements
 
