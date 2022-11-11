@@ -1,4 +1,3 @@
-console.log('js is working')
 
 const BoardModule = (() =>{
     let gameBoard = [
@@ -20,14 +19,14 @@ const BoardModule = (() =>{
     const squares = document.querySelectorAll("div.square");
     for (const square of squares){
     square.addEventListener('click', function(event){
-        alert(playerO.sign(), playerO.printScore());
+        // alert(playerO.sign(), playerO.printScore());
         alert(this.id);
         //TODO: Update this when player and turns are programmed. 
         markSquare("X", this.id);
         renderBoard(gameBoard, squares);
         
     });
-    }
+    };
 
     //render all contents of the gameboard array to the webpage. 
     const renderBoard = (array, gameGrids) => {
@@ -91,8 +90,9 @@ const DisplayModule = (() =>{
 })();
 
 const GameModule = (() =>{
-    let game = 0;
+    let round = 0;
     let turn = "X";
+    let winningCombo = undefined;
 
     const resetButton = document.querySelector("#reset-btn");
     resetButton.addEventListener("click", function(event){
@@ -101,10 +101,44 @@ const GameModule = (() =>{
     });
 
     //check for 3 in a row
+    const checkWinner= (array, sign) =>{
+        let victory = false;
+        let currentCombo = 0;
+        
+        const winCombos = [
+            [0, 4, 8],
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [2, 4, 6]
+          ];
+        
+        winCombos.forEach(element => {
+            //loop through each possible combination and use their indexing to see if the X or Os are in the right places by indexing the main array.
+            let i0 = element[0];
+            let i1 = element[1];
+            let i2 = element[2];
+            if ((array[i0] == sign) && (array[i1] == sign) && (array[i2] == sign)){
+                victory = true;
+                winningCombo = currentCombo;
+                
+            } else {
+                currentCombo++;
+                return;
+            }
+        });
+
+        return victory;
+    };
+
+
     //detect turn and logic for turn change after valid box clicked. 
 
     const resetGame = () => {
-        game = 0;
+        round = 0;
         turn = "X";
         BoardModule.resetBoard();
         
@@ -117,7 +151,7 @@ const GameModule = (() =>{
     
 
     
-    return{resetGame, resetGameBoard};
+    return{resetGame, resetGameBoard, checkWinner};
 })();
 
 const PlayerFactory = (symbol) => {
