@@ -6,7 +6,7 @@ const BoardModule = (() =>{
         ' ', ' ', ' '
      ];
 
-    const emptyGameBoard = [
+    const emptyGameBoard =[
         ' ', ' ', ' ',
         ' ', ' ', ' ',
         ' ', ' ', ' '
@@ -18,10 +18,9 @@ const BoardModule = (() =>{
     for (const square of squares){
     square.addEventListener('click', function(event){
         // alert(playerO.sign(), playerO.printScore());
-        alert(this.id);
+        
         //TODO: Update this when player and turns are programmed. 
         markSquare(GameModule.checkTurn(), this.id);
-        DisplayModule.display('wuzzp');
         renderBoard(gameBoard, squares);
         if (GameModule.checkWinner(gameBoard, GameModule.checkTurn())){
             DisplayModule.declareWinner(GameModule.checkTurn());
@@ -34,13 +33,10 @@ const BoardModule = (() =>{
     //render all contents of the gameboard array to the webpage. 
     const renderBoard = (array, gameGrids) => {
         let i = 0;
-        //do something with each item in the array
-        array.forEach(element => {
-            console.log(element)
-        });
+        
         //put that in the corresponding game square
         gameGrids.forEach(element=>{
-            console.log(array[i], i);
+            
             element.innerText = array[i];
             i++;
         })
@@ -64,19 +60,20 @@ const BoardModule = (() =>{
         
     };
     const resetBoard = () =>{
-        gameBoard = emptyGameBoard;
+        //copy the array, NOT assign it, because the pointer will make them the same obj. 
+        gameBoard = [...emptyGameBoard];
         renderBoard(gameBoard, squares);
+        document.getElementById("readout").classList.remove('victory-achieved');
+        DisplayModule.display(`Board Cleared.\nPlayer X goes first!`);
         return;
     };
 
-    return{renderBoard, markSquare, resetBoard};
+    const showEB =()=>{
+        return emptyGameBoard;
+    }
 
-    
-    //logic for squares to know if and what they contain
+    return{renderBoard, markSquare, resetBoard, showEB};
 
-    //check player.sign when a square is clicked
-
-    //tie DOM elements to gameboard array so that when user clicks a specific spot, they can make their mark where they expect to. 
 })();
 
 const DisplayModule = (() =>{
@@ -119,9 +116,14 @@ const GameModule = (() =>{
 
     const resetButton = document.querySelector("#reset-btn");
     resetButton.addEventListener("click", function(event){
-        alert("you clicked reset button")
+        
         resetGame();
     });
+
+    const resetBoardButton = document.querySelector("#reset-board");
+    resetBoardButton.addEventListener("click", function(event){
+        BoardModule.resetBoard();
+    })
 
     const switchTurns = () =>{
         if (turn === "X"){
@@ -187,7 +189,7 @@ const GameModule = (() =>{
         turn = "X";
         BoardModule.resetBoard();
         document.getElementById("readout").classList.remove('victory-achieved');
-        DisplayModule.display("Player X goes first!\n Round: 1");
+        DisplayModule.display(`Player X goes first!\n Round: ${round}`);
         
     }
     

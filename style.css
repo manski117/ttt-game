@@ -2,12 +2,18 @@
 
 /*FONT STUFF*/
 h1, h2, h3, h4, h5, h6, p, div, a {
-    color: white;
+    color: rgb(34, 255, 0);;
     
 }
 
-h1 {font-family: 'Albert Sans', sans-serif;}
+h1 {
+  font-size: 3rem;
+  font-family: 'Albert Sans', sans-serif;}
 h2 {font-family: 'Aldrich', sans-serif;}
+h3{
+  margin-top: -20px;
+  font-size: 1.5rem;
+}
 h3, p, div, h6 {font-family: 'Arya', sans-serif;}
 h4 {font-family: 'Carrois Gothic SC', sans-serif;}
 h5 {font-family: 'DotGothic16', sans-serif;}
@@ -15,7 +21,10 @@ h5 {font-family: 'DotGothic16', sans-serif;}
 /*LAYOUT STUFF*/
 
 body{
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/7/78/Dark_Rift_2012.jpg);
+  
   background-color: grey;
+  background-size: 2000px;
 }
 
 header{
@@ -23,6 +32,10 @@ header{
   padding-right: 40px;
   padding-top: 5px;
   padding-bottom:5px;
+  display: flex;
+  background-color:rgba(0, 0, 0, 0.3);
+  flex-direction: column;
+  align-items: center;
 }
 
 main{
@@ -30,7 +43,7 @@ main{
 }
 
 #readout-container{
-  height: 120px;
+  height: 140px;
   width: 100%;
   
   display: flex;
@@ -41,6 +54,8 @@ main{
 #readout{
   height: 100%;
   width: 80%;
+/*   background-color: rgba(0, 0, 0, 0.6); */
+  max-width: 900px; 
   font-size: 4rem;
   font-weight: 600;
   font-family: 'Courier New', Courier, monospace;
@@ -53,7 +68,20 @@ main{
 
 }
 .victory-achieved{
-  color: blue;
+  transform:scale(1.3);
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px rgb(195, 255, 174), 0 0 20px rgb(207, 255, 166), 0 0 30px #00e604, 0 0 40px #00e617, 0 0 50px #00e604, 0 0 60px #2ae600, 0 0 70px #2ee600;
+  }
+  to {
+    text-shadow: 0 0 20px rgb(255, 255, 255), 0 0 30px #65ff4d, 0 0 40px #4dff59, 0 0 50px #5cff4d, 0 0 60px #71ff4d, 0 0 70px #65ff4d, 0 0 80px #5cff4d;
+  }
 }
 
 #main-game-board{
@@ -64,9 +92,9 @@ main{
   height: 25rem;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  gap: 1px;
+  gap: 0;
   margin: 0px auto;
-  border: 2px solid green;
+  
   padding: 20px;
 }
 
@@ -77,6 +105,7 @@ div.square{
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 4px solid green;
 }
 
 #button-flexbox{
@@ -95,11 +124,33 @@ footer{
   flex-direction: row-reverse;
 }
 
+/* Buttons */
+.btn{
+    color: #FFF;
+  border: 2px solid rgb(109, 216, 2);
+  border-radius: 0px;
+  padding: 18px 36px;
+  display: inline-block;
+  background-color:rgba(0, 0, 0, 0.6);;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 #0dd802;
+  transition: ease-out 0.4s;
+}
+
+.btn:hover{
+  box-shadow: inset 400px 0 0 0 #46d802;
+}
+.btn:active{
+  transform:scale(1.3);
+}
 
 
 
 /*Construction layout stuff*/
-.l0{
+/* .l0{
   border: 4px solid white;
 }
 
@@ -109,7 +160,7 @@ footer{
 
 .l2{
   border: 2px solid orange;
-}
+} */
 
 
 
