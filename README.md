@@ -12,7 +12,10 @@ Building a tic tac toe game in browser through the Odin Project as a way to prac
 
     DONE make sure that a player can't mark a square that already has an X or O on it. 
 
--build logic that checks for a 3-in-a-row pattern and therefore detects winner
+    DONE build logic that checks for a 3-in-a-row pattern and therefore detects winner
+
+-make turn system that is aware of who's turn it is
+    -ensure that the right symbol shows up when clicked
 
 -make sure main readout area can display message to players. 
 

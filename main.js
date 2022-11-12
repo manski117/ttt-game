@@ -1,9 +1,9 @@
 
 const BoardModule = (() =>{
     let gameBoard = [
-        'X', 'O', ' ',
-        'X', 'O', 'X',
-        ' ', 'O', 'O'
+        ' ', ' ', ' ',
+        ' ', ' ', ' ',
+        ' ', ' ', ' '
      ];
 
     const emptyGameBoard = [
@@ -12,8 +12,6 @@ const BoardModule = (() =>{
         ' ', ' ', ' '
      ]; 
     
-
-
     //detect when a square is clicked
     //associate square DOM elements
     const squares = document.querySelectorAll("div.square");
@@ -22,9 +20,14 @@ const BoardModule = (() =>{
         // alert(playerO.sign(), playerO.printScore());
         alert(this.id);
         //TODO: Update this when player and turns are programmed. 
-        markSquare("X", this.id);
+        markSquare(GameModule.checkTurn(), this.id);
+        DisplayModule.display('wuzzp');
         renderBoard(gameBoard, squares);
-        
+        if (GameModule.checkWinner(gameBoard, GameModule.checkTurn())){
+            DisplayModule.declareWinner(GameModule.checkTurn());
+        } else{
+            GameModule.switchTurns();
+        }
     });
     };
 
@@ -55,7 +58,7 @@ const BoardModule = (() =>{
             //overrite that character in the main gameBoard array with the square that was chosen.
             gameBoard[intID] = sign;
         } else{
-            alert("Please choose a blank space");
+            DisplayModule.display("Please pick a blank space!");
             return;
         }
         
@@ -69,11 +72,6 @@ const BoardModule = (() =>{
     return{renderBoard, markSquare, resetBoard};
 
     
-
-    //associate with button DOM elements
-
-    //logic not to overrite a square
-    
     //logic for squares to know if and what they contain
 
     //check player.sign when a square is clicked
@@ -82,23 +80,70 @@ const BoardModule = (() =>{
 })();
 
 const DisplayModule = (() =>{
-    //associate with readout DOM elements
-    //display whos turn it is when turns change
-    //give feedback to players (can't choose this square, you loose, you win, etc.)
+    let readout = document.getElementById("readout");
 
-    return;
+
+    //make font size appropriately as screen changes
+    const flexFont =  () => {
+        var divs = document.getElementsByClassName("flexFont");
+        for(var i = 0; i < divs.length; i++) {
+            var relFontsize = divs[i].offsetWidth*0.05;
+            divs[i].style.fontSize = relFontsize+'px';
+        }
+    };
+
+    //associate with readout DOM elements
+    const display = (string) =>{
+        readout.innerText = string;
+        flexFont();
+        return;
+    };
+
+    const declareWinner =(sign) =>{
+        document.getElementById("readout").classList.add('victory-achieved');
+        display(`Victory! Player ${sign} wins!\n Reset board to play again!`);
+        // readout.classList.toggle("victor-declared");
+
+    };
+
+    return{display, declareWinner, flexFont};
 })();
 
 const GameModule = (() =>{
     let round = 0;
     let turn = "X";
     let winningCombo = undefined;
+    let readout = document.getElementById("readout");
+
+    
 
     const resetButton = document.querySelector("#reset-btn");
     resetButton.addEventListener("click", function(event){
         alert("you clicked reset button")
         resetGame();
     });
+
+    const switchTurns = () =>{
+        if (turn === "X"){
+            turn = "O";
+        } else if (turn === "O"){
+            turn = "X";
+        };
+        DisplayModule.display(`Player ${turn} turn`);
+        return;
+    };
+
+    const checkTurn = () =>{
+        return turn;
+    };
+    const roundPlus = () =>{
+        round++;
+        return;
+    };
+
+    const checkRound = () =>{
+        return round;
+    };
 
     //check for 3 in a row
     const checkWinner= (array, sign) =>{
@@ -141,6 +186,8 @@ const GameModule = (() =>{
         round = 0;
         turn = "X";
         BoardModule.resetBoard();
+        document.getElementById("readout").classList.remove('victory-achieved');
+        DisplayModule.display("Player X goes first!\n Round: 1");
         
     }
     
@@ -149,9 +196,11 @@ const GameModule = (() =>{
 
     }
     
+    const checkWinningCombo = () =>{
+        return winningCombo;
+    }
 
-    
-    return{resetGame, resetGameBoard, checkWinner};
+    return{resetGame, resetGameBoard, checkWinner, switchTurns, checkTurn, roundPlus, checkRound, checkWinningCombo};
 })();
 
 const PlayerFactory = (symbol) => {
@@ -173,20 +222,21 @@ const PlayerFactory = (symbol) => {
 
 };
 
+GameModule.resetGame();
 const playerO = PlayerFactory("O");
 const playerX = PlayerFactory("X");
 
 
+window.onload = function(event) {
+    DisplayModule.flexFont();
+};
+window.onresize = function(event) {
+    DisplayModule.flexFont();
+};
+
+
+
 //test code to go down here
-
-
-
-
-
-
-//no code beyond this line
-module.exports = {test1, test2};
-
 
 
 

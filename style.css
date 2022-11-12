@@ -21,8 +21,8 @@ body{
 header{
   padding-left: 40px;
   padding-right: 40px;
-  padding-top: 10px;
-  padding-bottom:10px;
+  padding-top: 5px;
+  padding-bottom:5px;
 }
 
 main{
@@ -30,7 +30,7 @@ main{
 }
 
 #readout-container{
-  height: 60px;
+  height: 120px;
   width: 100%;
   
   display: flex;
@@ -41,6 +41,19 @@ main{
 #readout{
   height: 100%;
   width: 80%;
+  font-size: 4rem;
+  font-weight: 600;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+}
+.victory-achieved{
+  color: blue;
 }
 
 #main-game-board{
