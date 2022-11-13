@@ -16,12 +16,20 @@ const BoardModule = (() =>{
     //associate square DOM elements
     const squares = document.querySelectorAll("div.square");
     for (const square of squares){
+        
     square.addEventListener('click', function(event){
         
         markSquare(GameModule.checkTurn(), this.id);
         
     });
     };
+
+    const unhighlightSquares = () =>{
+        for (const square of squares){
+            square.classList.remove('victory-square');
+        };
+    };
+    
 
     //render all contents of the gameboard array to the webpage. 
     const renderBoard = (array, gameGrids) => {
@@ -54,15 +62,19 @@ const BoardModule = (() =>{
             } else{
                 GameModule.switchTurns();
         };
+        } else if((gameBoard.includes(" ") === false)){
+            DisplayModule.display("Dude, I told you to reset the board.");
+            return;
         } else{
             DisplayModule.display("Please pick a blank space!");
             return;
-        };
+        }
         
     };
     const resetBoard = () =>{
         //copy the array, NOT assign it, because the pointer will make them the same obj. 
         gameBoard = [...emptyGameBoard];
+        BoardModule.unhighlightSquares();
         renderBoard(gameBoard, squares);
         document.getElementById("readout").classList.remove('victory-achieved');
         DisplayModule.display(`Board Cleared.\nPlayer X goes first!`);
@@ -73,13 +85,39 @@ const BoardModule = (() =>{
         return emptyGameBoard;
     }
 
-    return{renderBoard, markSquare, resetBoard, showEB};
+    return{renderBoard, markSquare, resetBoard, showEB, unhighlightSquares};
 
 })();
 
 const DisplayModule = (() =>{
     let readout = document.getElementById("readout");
+    const squares = document.querySelectorAll("div.square");
 
+    let squareArray = [];
+    for (const square of squares){
+        console.log(square.id);
+        squareArray.push(square.id);
+    };
+
+    
+    function getWinningIDs (winningCombo, squareArray){
+        //take a len 3 array and find the three square divs' IDs that lead to victory
+        let winningIDs = [];
+        winningCombo.forEach(element =>{
+            let winningID = squareArray[element];
+            console.log(winningID);
+            winningIDs.push(winningID);
+        });
+        return winningIDs;
+    };
+
+    function highlightCombo (winningIDs){
+        //take an array of three ids and apply a special class to their divs. 
+        winningIDs.forEach(element=>{
+            document.getElementById(`${element}`).classList.add('victory-square');
+        });
+        return;
+    };
 
     //make font size appropriately as screen changes
     const flexFont =  () => {
@@ -99,6 +137,8 @@ const DisplayModule = (() =>{
 
     const declareWinner =(sign) =>{
         document.getElementById("readout").classList.add('victory-achieved');
+        let comboToHighlight = getWinningIDs(GameModule.getWinningCombo(), squareArray);
+        highlightCombo(comboToHighlight);
         display(`Victory! Player ${sign} wins!\n Reset board to play again!`);
         // readout.classList.toggle("victor-declared");
 
@@ -123,7 +163,7 @@ const GameModule = (() =>{
         [2, 4, 6]
       ];
 
-    
+
 
     const resetButton = document.querySelector("#reset-btn");
     resetButton.addEventListener("click", function(event){
@@ -181,6 +221,10 @@ const GameModule = (() =>{
 
         return victory;
     };
+    const getWinningCombo = () =>{
+        //should return a len 3 array of the indexes in the gameBoard that need to be highlighted.
+        return winCombos[winningCombo];
+    }
 
 
     //detect turn and logic for turn change after valid box clicked. 
@@ -199,11 +243,8 @@ const GameModule = (() =>{
 
     }
     
-    const checkWinningCombo = () =>{
-        return winningCombo;
-    }
 
-    return{resetGame, resetGameBoard, checkWinner, switchTurns, checkTurn, roundPlus, checkRound, checkWinningCombo};
+    return{resetGame, resetGameBoard, checkWinner, switchTurns, checkTurn, roundPlus, checkRound, getWinningCombo};
 })();
 
 const PlayerFactory = (symbol) => {

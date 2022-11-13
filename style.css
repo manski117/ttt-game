@@ -74,6 +74,10 @@ main{
   text-align: center;
   animation: glow 1s ease-in-out infinite alternate;
 }
+.victory-square{
+  color: #fff;
+  animation: glow 1s ease-in-out infinite alternate;
+}
 
 @keyframes glow {
   from {

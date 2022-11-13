@@ -5,11 +5,11 @@ Building a tic tac toe game in browser through the Odin Project as a way to prac
 space background: Public Domain from NASA via wikipedia commons
 
 **TODO:**
-
--debug: says victory even when draw achieved
--debug: switching turns even when invalid space clicked
--Make it so that the winning combo is highlighted
--remove highlighting when board is next rendered
+-debug: why are more squares highlighting as winning if you keep clicking squares after you win?
+    DONE debug: says victory even when draw achieved
+    DONE debug: switching turns even when invalid space clicked
+    DONE Make it so that the winning combo is highlighted
+    DONE remove highlighting when board is next rendered
     DONE establish main layout.
 
     DONE write function that will render contents of the gameBoard array to the webpage
