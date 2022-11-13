@@ -100,12 +100,12 @@ main{
 
 div.square{
   font-size: 6rem;
-  color: red;
+  color: white;
   font-family: 'Aldrich', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 4px solid green;
+  border: 3px solid green;
 }
 
 #button-flexbox{

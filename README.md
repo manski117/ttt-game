@@ -5,6 +5,11 @@ Building a tic tac toe game in browser through the Odin Project as a way to prac
 space background: Public Domain from NASA via wikipedia commons
 
 **TODO:**
+
+-debug: says victory even when draw achieved
+-debug: switching turns even when invalid space clicked
+-Make it so that the winning combo is highlighted
+-remove highlighting when board is next rendered
     DONE establish main layout.
 
     DONE write function that will render contents of the gameBoard array to the webpage
@@ -14,7 +19,7 @@ space background: Public Domain from NASA via wikipedia commons
     DONE make sure that a player can't mark a square that already has an X or O on it. 
 
     DONE build logic that checks for a 3-in-a-row pattern and therefore detects winner
-- debug why reset button is not clearing board.
+    DONE debug why reset button is not clearing board.
 
     DONE make turn system that is aware of who's turn it is
     DONEensure that the right symbol shows up when clicked

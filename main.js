@@ -17,16 +17,9 @@ const BoardModule = (() =>{
     const squares = document.querySelectorAll("div.square");
     for (const square of squares){
     square.addEventListener('click', function(event){
-        // alert(playerO.sign(), playerO.printScore());
         
-        //TODO: Update this when player and turns are programmed. 
         markSquare(GameModule.checkTurn(), this.id);
-        renderBoard(gameBoard, squares);
-        if (GameModule.checkWinner(gameBoard, GameModule.checkTurn())){
-            DisplayModule.declareWinner(GameModule.checkTurn());
-        } else{
-            GameModule.switchTurns();
-        }
+        
     });
     };
 
@@ -53,10 +46,18 @@ const BoardModule = (() =>{
         if (gameBoard[intID] == " "){
             //overrite that character in the main gameBoard array with the square that was chosen.
             gameBoard[intID] = sign;
+            renderBoard(gameBoard, squares);
+            if (GameModule.checkWinner(gameBoard, GameModule.checkTurn())){
+                DisplayModule.declareWinner(GameModule.checkTurn());
+            } else if((gameBoard.includes(" ") === false) && (GameModule.checkWinner((gameBoard, GameModule.checkTurn())===false))){
+                DisplayModule.display("DRAW! No victor. \nReset board to try again.")
+            } else{
+                GameModule.switchTurns();
+        };
         } else{
             DisplayModule.display("Please pick a blank space!");
             return;
-        }
+        };
         
     };
     const resetBoard = () =>{
@@ -111,6 +112,16 @@ const GameModule = (() =>{
     let turn = "X";
     let winningCombo = undefined;
     let readout = document.getElementById("readout");
+    const winCombos = [
+        [0, 4, 8],
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [2, 4, 6]
+      ];
 
     
 
@@ -152,16 +163,6 @@ const GameModule = (() =>{
         let victory = false;
         let currentCombo = 0;
         
-        const winCombos = [
-            [0, 4, 8],
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8],
-            [2, 4, 6]
-          ];
         
         winCombos.forEach(element => {
             //loop through each possible combination and use their indexing to see if the X or Os are in the right places by indexing the main array.
